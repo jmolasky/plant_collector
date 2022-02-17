@@ -1,10 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 # Create your views here.
 
+class Plant:
+    def __init__(self, name):
+        self.name = name
+
+plants = [
+    Plant('Christmas Cactus'),
+    Plant('Aloe'),
+    Plant('Snake Plant')
+]
+
 def home(request):
-    return HttpResponse('Hello world!')
+    return render(request, 'home.html')
 
 def about(request):
-    return HttpResponse('About')
+    return render(request, 'about.html')
+
+def plants_index(request):
+    return render(request, 'plants/index.html', {'plants': plants})
