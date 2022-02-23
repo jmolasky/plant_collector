@@ -15,7 +15,7 @@
   </head>
   <body>
     <header class="navbar-fixed">
-      <nav>
+      <nav class="light-green darken-1">
         <div class="nav-wrapper">
           <ul>
             <li>
@@ -26,14 +26,15 @@
           </ul>
           <ul class="right">
             <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'plants_create' %}">Add a Plant</a></li>
             <li><a href="{% url 'index' %}">View All My Plants</a></li>
           </ul>
         </div>
       </nav>
     </header>
     <main class="container">{% block content %} {% endblock %}</main>
-    <footer class="page-footer">
-      <div class="right">
+    <footer class="page-footer light-green darken-1">
+      <div class="center">
         All Rights Reserved, &copy; 2022 Plant Collector &nbsp;
       </div>
     </footer>

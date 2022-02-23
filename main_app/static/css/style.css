@@ -7,8 +7,3 @@ body {
 main {
   flex-grow: 1;
 }
-
-footer {
-  padding-top: 0;
-  text-align: right;
-}
