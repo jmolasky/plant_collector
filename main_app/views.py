@@ -31,11 +31,11 @@ def add_watering(request, plant_id):
     
 class PlantCreate(CreateView):
     model = Plant
-    fields = '__all__'
+    fields = ('name', 'type', 'genus', 'description')
 
 class PlantUpdate(UpdateView):
     model = Plant
-    fields = '__all__'
+    fields = ('name', 'type', 'genus', 'description')
 
 class PlantDelete(DeleteView):
     model = Plant
@@ -46,3 +46,7 @@ class FertilizerList(ListView):
 
 class FertilizerDetail(DetailView):
     model = Fertilizer
+
+class FertilizerCreate(CreateView):
+    model = Fertilizer
+    fields = '__all__'

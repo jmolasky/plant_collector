@@ -8,6 +8,9 @@ class Fertilizer(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.name}"
+    
+    def get_absolute_url(self):
+        return reverse('fertilizer_detail', kwargs={'pk': self.id})
 
 class Plant(models.Model):
     name = models.CharField(max_length=100)
