@@ -14,4 +14,5 @@ urlpatterns = [
     path('fertilizers/<int:pk>/', views.FertilizerDetail.as_view(), name='fertilizer_detail'),
     path('fertilizers/create/', views.FertilizerCreate.as_view(), name='fertilizers_create'),
     path('fertilizers/<int:pk>/update/', views.FertilizerUpdate.as_view(), name='fertilizers_update'),
+    path('fertilizers/<int:pk>/delete/', views.FertilizerDelete.as_view(), name='fertilizers_delete'),
 ]

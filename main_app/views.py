@@ -54,3 +54,7 @@ class FertilizerCreate(CreateView):
 class FertilizerUpdate(UpdateView):
     model = Fertilizer
     fields = ('name', 'brand')
+
+class FertilizerDelete(DeleteView):
+    model = Fertilizer
+    success_url = '/fertilizers/'
