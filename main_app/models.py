@@ -2,11 +2,12 @@ from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+class Fertilizer(models.Model):
+    name = models.CharField(max_length=50)
+    brand = models.CharField(max_length=50)
 
-# FEEDINGS = (
-#     ('N', 'No'),
-#     ('Y', "Yes"),
-# )
+    def __str__(self):
+        return f"{self.brand} {self.name}"
 
 class Plant(models.Model):
     name = models.CharField(max_length=100)
@@ -22,7 +23,6 @@ class Plant(models.Model):
 
 class Watering(models.Model):
     date = models.DateField('Watering date')
-    # fertilized = models.CharField(max_length=1, choices=FEEDINGS, default=FEEDINGS[0][0])
     fertilized = models.BooleanField('Fertilized?')
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
 

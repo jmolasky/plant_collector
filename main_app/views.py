@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from .forms import WateringForm
-from .models import Plant
+from .models import Plant, Fertilizer
 
 # Create your views here.
 
@@ -39,3 +40,9 @@ class PlantUpdate(UpdateView):
 class PlantDelete(DeleteView):
     model = Plant
     success_url = '/plants/'
+
+class FertilizerList(ListView):
+    model = Fertilizer
+
+class FertilizerDetail(DetailView):
+    model = Fertilizer
