@@ -3,55 +3,99 @@
 <h1>Plant Detail</h1>
 
 <div class="row">
-  <div class="col s6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ plant.name }}</span>
-        <p>Type: {{ plant.type }}</p>
-        <p>Genus: {{ plant.genus }}</p>
-        <p>Description: {{ plant.description }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'plants_update' plant.id %}">Edit</a>
-        <a href="{% url 'plants_delete' plant.id %}">Delete</a>
-      </div>
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ plant.name }}</span>
+                <p>Type: {{ plant.type }}</p>
+                <p>Genus: {{ plant.genus }}</p>
+                <p>Description: {{ plant.description }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'plants_update' plant.id %}">Edit</a>
+                <a href="{% url 'plants_delete' plant.id %}">Delete</a>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col s6">
-    <form action="{% url 'add_watering' plant.id %}" method="POST">
-      {% csrf_token %} {{ watering_form.non_field_errors }}
-      <div class="fieldWrapper">
-        {{ watering_form.date.errors }}
-        <label for="{{ watering_form.date.id_for_label }}"
-          >Watering date:</label
-        >
-        {{ watering_form.date }}
-      </div>
-      <div class="fieldWrapper">
-        {{ watering_form.fertilized.errors }}
-        <label for="{{ watering_form.fertilized.id_for_label }}">
-          {{ watering_form.fertilized }}
-          <span>{{ watering_form.fertilized.label }}</span>
-        </label>
-      </div>
-      <input type="submit" value="Add Watering" class="btn blue" />
-    </form>
-    <table class="striped">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Fertilized?</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for watering in plant.watering_set.all %}
-        <tr>
-          <td>{{ watering.date }}</td>
-          <td>{{ watering.fertilized }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+    <div class="col s6">
+        <form action="{% url 'add_watering' plant.id %}" method="POST">
+            {% csrf_token %} {{ watering_form.non_field_errors }}
+            <div class="fieldWrapper">
+                {{ watering_form.date.errors }}
+                <label for="{{ watering_form.date.id_for_label }}"
+                    >Watering date:</label
+                >
+                {{ watering_form.date }}
+            </div>
+            <div class="fieldWrapper">
+                {{ watering_form.fertilized.errors }}
+                <label for="{{ watering_form.fertilized.id_for_label }}">
+                    {{ watering_form.fertilized }}
+                    <span>{{ watering_form.fertilized.label }}</span>
+                </label>
+            </div>
+            <input type="submit" value="Add Watering" class="btn blue" />
+        </form>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Fertilized?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for watering in plant.watering_set.all %}
+                <tr>
+                    <td>{{ watering.date }}</td>
+                    <td>{{ watering.fertilized }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col s6">
+        <h3>Fertilizers for {{ plant.name }}</h3>
+        {% if plant.fertilizers.count %} 
+            {% for fertilizer in plant.fertilizers.all %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            {{ fertilizer.brand }} {{ fertilizer.name }}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %} 
+        {% else %}
+            <h6>{{ plant.name }} has no fertilizers at this time</h6>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <h3>Available Fertilizers</h3>
+        {% if fertilizers.count %} {% for fertilizer in fertilizers %}
+        <div class="card">
+            <div class="card_content">
+                {{ fertilizer.brand }} {{ fertilizer.name }}
+            </div>
+            <div class="card-action">
+                <form
+                    action="{% url 'assoc_fertilizer' plant.id fertilizer.id %}"
+                    method="POST"
+                >
+                    {% csrf_token %}
+                    <button type="submit" class="btn green">Add</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %} {% else %}
+        <h6>
+            {{ plant.name }} is already being fertilized with all available
+            fertilizers. Please be advised that if this number is more than at
+            most 2, that is definitely overkill.
+        </h6>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
