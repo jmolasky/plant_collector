@@ -50,3 +50,7 @@ class FertilizerDetail(DetailView):
 class FertilizerCreate(CreateView):
     model = Fertilizer
     fields = '__all__'
+
+class FertilizerUpdate(UpdateView):
+    model = Fertilizer
+    fields = ('name', 'brand')

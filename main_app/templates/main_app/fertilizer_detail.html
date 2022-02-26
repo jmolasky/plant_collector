@@ -7,5 +7,8 @@
     <span class="card-title">{{ object.name }}</span>
     <p>Brand: {{ object.brand }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'fertilizers_update' object.id %}">Edit</a>
+  </div>
 </div>
 {% endblock %}

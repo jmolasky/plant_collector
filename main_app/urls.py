@@ -13,4 +13,5 @@ urlpatterns = [
     path('fertilizers/', views.FertilizerList.as_view(), name='fertilizers_list'),
     path('fertilizers/<int:pk>/', views.FertilizerDetail.as_view(), name='fertilizer_detail'),
     path('fertilizers/create/', views.FertilizerCreate.as_view(), name='fertilizers_create'),
+    path('fertilizers/<int:pk>/update/', views.FertilizerUpdate.as_view(), name='fertilizers_update'),
 ]
