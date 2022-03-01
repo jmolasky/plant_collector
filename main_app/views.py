@@ -37,6 +37,10 @@ def add_watering(request, plant_id):
 def assoc_fertilizer(request, plant_id, fertilizer_id):
     Plant.objects.get(id=plant_id).fertilizers.add(fertilizer_id)
     return redirect('detail', plant_id=plant_id)
+
+def remove_fertilizer(request, plant_id, fertilizer_id):
+    Plant.objects.get(id=plant_id).fertilizers.remove(fertilizer_id)
+    return redirect('detail', plant_id=plant_id)
     
 class PlantCreate(CreateView):
     model = Plant
