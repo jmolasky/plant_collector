@@ -2,12 +2,18 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import WateringForm
-from .models import Plant, Fertilizer
+from .models import Plant, Fertilizer, Photo
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+import boto3
+import uuid
+
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET = 'plantcollector-bucket-92'
 
 # Create your views here.
 
@@ -51,6 +57,25 @@ def assoc_fertilizer(request, plant_id, fertilizer_id):
 @login_required
 def remove_fertilizer(request, plant_id, fertilizer_id):
     Plant.objects.get(id=plant_id).fertilizers.remove(fertilizer_id)
+    return redirect('detail', plant_id=plant_id)
+
+@login_required
+def add_photo(request, plant_id):
+    photo_file = request.FILES.get('photo-file')
+    if photo_file:
+        session = boto3.Session(profile_name='plant_collector')
+        plant_collector_s3_client = session.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            plant_collector_s3_client.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, plant_id=plant_id)
+            photo.save()
+        except Exception as error:
+            print('****************************')
+            print('An error occurred while uploading to S3')
+            print(error)
+            print('****************************')
     return redirect('detail', plant_id=plant_id)
 
 def signup(request):
